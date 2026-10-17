@@ -33,7 +33,7 @@ MODULE paras
   !!$ this module contains several of the physical parameters that needs to be defined
   
   !!$ output folder
-  CHARACTER(len=*), PARAMETER :: folder='/home/user/output/000/' ! needs to be changed with your global path
+  CHARACTER(len=*), PARAMETER :: folder='output/' ! relative to the working directory
 
   !!$ initialization of Tolerance for Steady State !
   REAL(DP), PARAMETER ::  tolsteady=1.0d-10

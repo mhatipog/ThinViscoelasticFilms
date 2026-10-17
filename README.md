@@ -28,15 +28,23 @@ or simply build with
 
 `make all`
 
-To execute the program, run with the name of the executable created
+Run the executable from the repository root (so relative output paths resolve correctly):
 
-`./ThinVEFilm`
+```sh
+cd ..
+mkdir -p output
+./build/ThinVEFilm
+```
 
-or launch in a scheduling system.
+The `output/` directory is relative to the current working directory. You can change `folder` in `paras.f90` before compiling if you want a different location.
 
 ## Output
 
-The output files are intended to be placed in an `Output` folder, on the same level of the `Debug` folder. This needs to specified in the `folder` variable in the file [`paras.f90`](./paras.f90). The `status.dat` file summarizes the parameters used for the simulation and monitors the adaptive time stepping and Newton's convergence in time. The state variable of the thin film equation is the thickness of the film relative to the solid substrate, printed in the file `thickness.dat`, for all contiguous grid points, for all consecutive time steps. The file `thickness.dat` gets printed at each selected output in append mode (i.e., never overwritten). On the other hand, there exist another output file for the solution, called `resLastOut.dat` that at every step gets overwritten to store the solution at the last output, with more significant digits of precision. This has been implemented so that we can checkpoint the solution and continue the simulation later with an existing solution. In the case of the consitnuation of an existing simulation, use `init_switch=1` in the [`paras.f90`](./paras.f90) file and make sure that the file `resLastOut.dat` is present in your current working directory.
+Output files are written to the `output/` directory when the program is launched from the repository root, as shown above. The path is set by `folder` in [`paras.f90`](./paras.f90). Create the directory before running. The `status.dat` file summarizes the parameters used for the simulation and monitors the adaptive time stepping and Newton's convergence in time. The state variable of the thin film equation is the thickness of the film relative to the solid substrate, printed in the file `thickness.dat`, for all contiguous grid points, for all consecutive time steps. The file `thickness.dat` gets printed at each selected output in append mode (i.e., never overwritten). On the other hand, there exist another output file for the solution, called `resLastOut.dat` that at every step gets overwritten to store the solution at the last output, with more significant digits of precision. This has been implemented so that we can checkpoint the solution and continue the simulation later with an existing solution. In the case of the consitnuation of an existing simulation, use `init_switch=1` in the [`paras.f90`](./paras.f90) file and make sure that the file `resLastOut.dat` is present in your current working directory.
+
+## Numerical smoke test
+
+On a system with `gfortran`, `make`, and Python 3, run `python3 tests/check_linear_growth.py`. This builds a temporary copy of the original Newtonian configuration with a shorter run time and checks the linear instability growth rate against theory. No third-party Python packages are needed; production parameters are unchanged.
 
 ## Contributors
 Different contributors during the years have worked on different parts of this code. We acknowledge:

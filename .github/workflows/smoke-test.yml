@@ -1,0 +1,17 @@
+name: Fortran smoke test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  numerical-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check original Newtonian growth rate
+        run: python3 tests/check_linear_growth.py
